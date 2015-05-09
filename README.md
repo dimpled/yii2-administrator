@@ -1,4 +1,5 @@
-DIM-ADMIN
+
+Yii2-Administrator
 =========
 yii2-extension for administrator, authentication & authorization
 
@@ -29,3 +30,5 @@ Once the extension is installed, simply use it in your code by  :
 
 ```php
 <?= \dimple\administrator\AutoloadExample::widget(); ?>```
+=======
+
