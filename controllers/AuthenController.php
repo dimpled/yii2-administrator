@@ -72,11 +72,30 @@ class AuthenController extends Controller
                 }
                 $this->action->successUrl = Url::to(['/administrator/registration/connect','account_id'=>$account->id]);
             }else{
+
                  Yii::$app->user->login($account->user, $this->module->rememberFor);
                  $this->action->successUrl =  Url::home();
-            }
+            }      
+    }
 
-            
+    /**
+     * Tries to connect social account to user.
+     * 
+     * @param ClientInterface $client
+     */
+    public function connect(ClientInterface $client)
+    {
+        
+        $account = $this->registerAccount($client);
+        
+        if ($account->user === null) {
+            $account->link('user', Yii::$app->user->identity);
+            Yii::$app->session->setFlash('success', \Yii::t('user', 'Your account has been connected'));
+        } else {
+            Yii::$app->session->setFlash('danger', \Yii::t('user', 'This account has already been connected to another user'));
+        }
+
+         $this->action->successUrl = Url::to(['/administrator/profile/networks']);
     }
 
     public function registerAccount($client){
@@ -121,24 +140,9 @@ class AuthenController extends Controller
         {
             return false;
         }
-
-        
-
     }
 
-    /**
-     * Tries to connect social account to user.
-     * 
-     * @param ClientInterface $client
-     */
-    public function connect(ClientInterface $client)
-    {
-        forward_static_call([
-            $this->module->modelMap['Account'],
-            'connectWithUser',
-        ], $client);
-        $this->action->successUrl = Url::to(['/user/settings/networks']);
-    }
+
 
     public function actionSignin()
     {
@@ -156,8 +160,6 @@ class AuthenController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             
-            $this->lastUpdate($model);
-            
             return $this->goBack();
         } else {
             return $this->render('login', [
@@ -166,31 +168,15 @@ class AuthenController extends Controller
         }
     }
 
-    public function lastUpdate($model){
-            $user  = $model->getUser();
-
-            if($user->login_time!=null){
-                $user->last_login_time = $user->login_time;
-            }else{
-                $user->last_login_time = time();
-            }
-            $user->login_time = time();
-
-            if($user->login_ip!=null){
-                $user->last_login_ip = $user->login_ip;
-            }else{
-                $user->last_login_ip = Yii::$app->request->getUserIP();
-            }
-            $user->login_ip = Yii::$app->request->getUserIP();
-
-            $user->save(false);
-    }
-
     public function actionSignout()
     {
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionDisconnect(){
+        echo 'disconect';
     }
 
 }

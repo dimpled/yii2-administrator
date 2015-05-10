@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use dektrium\user\widgets\Connect;
+use dimple\administrator\widgets\Connect;
 use yii\helpers\Html;
 
 /**
@@ -19,25 +19,17 @@ use yii\helpers\Html;
 
 $this->title = Yii::t('user', 'Networks');
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['User'] = $user;
 ?>
 
-<?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
+<?= $this->render('/_alert') ?>
 
-<div class="row">
-    <div class="col-md-3">
-        <?= $this->render('_menu') ?>
-    </div>
-    <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <?= Html::encode($this->title) ?>
-            </div>
-            <div class="panel-body">
+
                 <div class="alert alert-info">
                     <p><?= Yii::t('user', 'You can connect multiple accounts to be able to log in using them') ?>.</p>
                 </div>
                 <?php $auth = Connect::begin([
-                    'baseAuthUrl' => ['/user/security/auth'],
+                    'baseAuthUrl' => ['/administrator/authen/auth'],
                     'accounts'    => $user->accounts,
                     'autoRender'  => false,
                     'popupMode'   => false
@@ -56,9 +48,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     Html::a(Yii::t('user', 'Disconnect'), $auth->createClientUrl($client), [
                                         'class' => 'btn btn-danger btn-block',
                                         'data-method' => 'post',
+                                        'data-pjax'=>"0"
                                     ]) :
                                     Html::a(Yii::t('user', 'Connect'), $auth->createClientUrl($client), [
-                                        'class' => 'btn btn-success btn-block'
+                                        'class' => 'btn btn-success btn-block',
+                                        'data-pjax'=>"0"
                                     ])
                                 ?>
                             </td>
@@ -66,7 +60,4 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php endforeach; ?>
                 </table>
                 <?php Connect::end() ?>
-            </div>
-        </div>
-    </div>
-</div>
+

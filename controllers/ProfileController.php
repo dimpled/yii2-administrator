@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 use yii\web\NotFoundHttpException;
 use dimple\administrator\models\User;
 use dimple\administrator\models\Profile;
-
+use dimple\administrator\models\SocialAccount;
 
 class ProfileController extends Controller{
 
@@ -59,23 +59,42 @@ class ProfileController extends Controller{
         }
     }
 
-    public function actionNetowrks(){
-
+    public function actionNetworks()
+    {
+        return $this->render('networks', [
+            'user' => Yii::$app->user->identity
+        ]);
     }
 
-	    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    public function actionDisconnect($id)
+    {
+        $account = $this->findModelAccount($id);
+        if ($account === null) {
+            throw new NotFoundHttpException;
+        }
+        if ($account->user_id != Yii::$app->user->id) {
+            throw new ForbiddenHttpException;
+        }
+        $account->delete();
+
+        return $this->redirect(['networks']);
+    }
+
     protected function findModel($id)
     {
         if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested user does not exist.');
+        }
+    }
+
+    protected function findModelAccount($id)
+    {
+        if (($model = SocialAccount::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested account does not exist.');
         }
     }
 

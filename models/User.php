@@ -1,4 +1,5 @@
 <?php
+
 namespace dimple\administrator\models;
 
 use Yii;
@@ -367,12 +368,29 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
 
+    // /**
+    //  * @return \yii\db\ActiveQuery
+    //  */
+    // public function getAccounts()
+    // {
+    //     return $this->hasMany(SocialAccount::className(), ['user_id' => 'id']);
+
+    // }
+
     /**
-     * @return \yii\db\ActiveQuery
+     * @return Account[] Connected accounts ($provider => $account)
      */
-    public function getSocialAccounts()
+    public function getAccounts()
     {
-        return $this->hasMany(SocialAccount::className(), ['user_id' => 'id']);
+        $connected = [];
+        $accounts  = $this->hasMany(SocialAccount::className(), ['user_id' => 'id'])->all();
+
+        /** @var Account $account */
+        foreach ($accounts as $account) {
+            $connected[$account->provider] = $account;
+        }
+
+        return $connected;
     }
 
     public function getUsernameFromEmail()

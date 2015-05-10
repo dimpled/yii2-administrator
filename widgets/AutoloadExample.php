@@ -1,6 +1,6 @@
 <?php
 
-namespace dimple\administrator;
+namespace dimple\administrator\widgets;
 
 /**
  * This is just an example.

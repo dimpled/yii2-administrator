@@ -59,8 +59,9 @@ class LoginForm extends SystemLoginform
     public function validateConfirmation($attribute, $params){
 
         if (!$this->hasErrors()) {
-            $user = $this->getUser();
 
+            $user = $this->getUser();
+            
             $confirmationRequired = ($this->_module->enableConfirmation && !$this->_module->enableUnconfirmedLogin);
             if ($confirmationRequired && !$user->getIsConfirmed()) {
                 $this->addError($attribute, Yii::t('user', 'You need to confirm your email address'));
@@ -82,6 +83,7 @@ class LoginForm extends SystemLoginform
     public function login()
     {
         if ($this->validate()) {
+
             $this->saveLoginLog(1);
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         } else {
