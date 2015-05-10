@@ -9,6 +9,7 @@ use dimple\administrator\models\SystemLogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * SystemLogController implements the CRUD actions for SystemLog model.
@@ -18,6 +19,16 @@ class SystemLogController extends Controller
     public function behaviors()
     {
         return [
+           'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        //'actions' => [],
+                        'allow' => true,
+                        'roles' => ['Admin'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

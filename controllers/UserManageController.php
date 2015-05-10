@@ -10,6 +10,7 @@ use dimple\administrator\models\SystemLoginformSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * UserManageController implements the CRUD actions for User model.
@@ -24,6 +25,28 @@ class UserManageController extends Controller
     {
         $this->mailer = Yii::$container->get(Mailer::className());
         parent::init();
+    }
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index','resend-confirm', 'delete','create','update','update-profile','view','user-loginlog'],
+                        'allow' => true,
+                        'roles' => ['Manager'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
     }
 
     public function actionResendConfirm($id){
@@ -41,18 +64,6 @@ class UserManageController extends Controller
             
             return $this->redirect(['view', 'id' => $model->id]);
         }
-    }
-
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
     }
 
     /**
@@ -225,6 +236,6 @@ class UserManageController extends Controller
             $this->updateField();
          }
 
-         return true; // or false to not run the action
+         return true; 
       }
 }

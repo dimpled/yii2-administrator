@@ -26,9 +26,10 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-Once the extension is installed, simply use it in your code by  :
 
-```php
-<?= \dimple\administrator\AutoloadExample::widget(); ?>```
-=======
+
+## License
+
+Yii2-user is released under the MIT License. See the bundled [LICENSE.md](LICENSE.md)
+for details.
 

@@ -7,26 +7,26 @@
 use common\models\FileStorageItem;
 use common\models\User;
 
-$this->title = Yii::t('backend', 'System Information');
+$this->title = Yii::t('user', 'System Information');
 $this->registerJs("window.paceOptions = { ajax: false }", \yii\web\View::POS_HEAD);
-$this->registerJsFile('/js/system-information/index.js', ['depends'=>['\yii\web\JqueryAsset', '\common\assets\Flot', '\yii\bootstrap\BootstrapPluginAsset']]) ?>
+$this->registerJsFile('/js/system-information/index.js', ['depends'=>['\yii\web\JqueryAsset', '\administrator\assets\Flot', '\yii\bootstrap\BootstrapPluginAsset']]) ?>
 <div id="system-information-index">
     <div class="row connectedSortable">
         <div class="col-lg-6 col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="fa fa-hdd-o"></i>
-                    <h3 class="box-title"><?php echo Yii::t('backend', 'Processor') ?></h3>
+                    <h3 class="box-title"><?php echo Yii::t('user', 'Processor') ?></h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <dl class="dl-horizontal">
-                        <dt><?php echo Yii::t('backend', 'Processor') ?></dt>
+                        <dt><?php echo Yii::t('user', 'Processor') ?></dt>
                         <dd><?php echo $provider->getCpuModel() ?></dd>
 
-                        <dt><?php echo Yii::t('backend', 'Processor Architecture') ?></dt>
+                        <dt><?php echo Yii::t('user', 'Processor Architecture') ?></dt>
                         <dd><?php echo $provider->getArchitecture() ?></dd>
 
-                        <dt><?php echo Yii::t('backend', 'Number of cores') ?></dt>
+                        <dt><?php echo Yii::t('user', 'Number of cores') ?></dt>
                         <dd><?php echo $provider->getCpuCores() ?></dd>
                     </dl>
                 </div><!-- /.box-body -->
@@ -36,17 +36,17 @@ $this->registerJsFile('/js/system-information/index.js', ['depends'=>['\yii\web\
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="fa fa-hdd-o"></i>
-                    <h3 class="box-title"><?php echo Yii::t('backend', 'Operating System') ?></h3>
+                    <h3 class="box-title"><?php echo Yii::t('user', 'Operating System') ?></h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <dl class="dl-horizontal">
-                        <dt><?php echo Yii::t('backend', 'OS') ?></dt>
+                        <dt><?php echo Yii::t('user', 'OS') ?></dt>
                         <dd><?php echo $provider->getOsType() ?></dd>
 
-                        <dt><?php echo Yii::t('backend', 'OS Release') ?></dt>
+                        <dt><?php echo Yii::t('user', 'OS Release') ?></dt>
                         <dd><?php echo $provider->getOsRelease() ?></dd>
 
-                        <dt><?php echo Yii::t('backend', 'Kernel version') ?></dt>
+                        <dt><?php echo Yii::t('user', 'Kernel version') ?></dt>
                         <dd><?php echo $provider->getOsKernelVersion() ?></dd>
                     </dl>
                 </div><!-- /.box-body -->
@@ -56,17 +56,17 @@ $this->registerJsFile('/js/system-information/index.js', ['depends'=>['\yii\web\
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="fa fa-hdd-o"></i>
-                    <h3 class="box-title"><?php echo Yii::t('backend', 'Time') ?></h3>
+                    <h3 class="box-title"><?php echo Yii::t('user', 'Time') ?></h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <dl class="dl-horizontal">
-                        <dt><?php echo Yii::t('backend', 'System Date') ?></dt>
+                        <dt><?php echo Yii::t('user', 'System Date') ?></dt>
                         <dd><?php echo Yii::$app->formatter->asDate(time()) ?></dd>
 
-                        <dt><?php echo Yii::t('backend', 'System Time') ?></dt>
+                        <dt><?php echo Yii::t('user', 'System Time') ?></dt>
                         <dd><?php echo Yii::$app->formatter->asTime(time()) ?></dd>
 
-                        <dt><?php echo Yii::t('backend', 'Timezone') ?></dt>
+                        <dt><?php echo Yii::t('user', 'Timezone') ?></dt>
                         <dd><?php echo date_default_timezone_get() ?></dd>
                     </dl>
                 </div><!-- /.box-body -->

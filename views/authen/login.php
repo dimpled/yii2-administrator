@@ -11,9 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <?= $this->render('/_alert'); ?>
-<?= yii\authclient\widgets\AuthChoice::widget([
-     'baseAuthUrl' => ['/administrator/authen/auth']
-]) ?>
+
 <?php //$this->render('/layouts/_alert'); ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -36,12 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?= yii\authclient\widgets\AuthChoice::widget([
+     'baseAuthUrl' => ['/administrator/authen/auth']
+]) ?>
 
-<?php
-$this->registerJs("
-jQuery('#login-form').on('beforeValidation', function(event, params) {
-    console.log(44);
- });
-");
-?>
 

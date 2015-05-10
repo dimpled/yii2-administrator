@@ -8,6 +8,7 @@ use dimple\administrator\models\SystemLoginformSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * SystemLoginController implements the CRUD actions for SystemLoginform model.
@@ -17,6 +18,16 @@ class SystemLoginController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        //'actions' => [],
+                        'allow' => true,
+                        'roles' => ['Admin'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

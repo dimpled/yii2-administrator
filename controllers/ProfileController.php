@@ -10,10 +10,34 @@ use yii\web\NotFoundHttpException;
 use dimple\administrator\models\User;
 use dimple\administrator\models\Profile;
 use dimple\administrator\models\SocialAccount;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 class ProfileController extends Controller{
 
     public $layout = '@dimple/administrator/views/layouts/profile_user';
+
+    public function behaviors()
+    {
+        return [
+           'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        //'actions' => [],
+                        'allow' => true,
+                        'roles' => ['User'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
+    }
 
 	public function actionIndex(){
 		$model = $this->findModel(Yii::$app->user->id);

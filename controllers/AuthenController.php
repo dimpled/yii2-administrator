@@ -28,8 +28,15 @@ class AuthenController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    ['allow' => true, 'actions' => ['signin', 'auth','success','test']],
-                    ['allow' => true, 'actions' => ['auth', 'signout'], 'roles' => ['@']]
+                    [
+                        'allow' => true, 
+                        'actions' => ['signin', 'auth','success'],
+                        'roles' => ['?']
+                    ],[
+                        'allow' => true, 
+                        'actions' => ['auth', 'signout','disconnect'], 
+                        'roles' => ['@']
+                    ]
                 ],
             ],
             'verbs' => [

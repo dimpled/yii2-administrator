@@ -27,9 +27,9 @@ $user = $this->params['User'];
                     ],
                     'encodeLabels'=>false,
                     'items' => [
-                       
-                        ['label' => '<i class="glyphicon glyphicon-user"></i> '.Yii::t('user', 'Profile'),  'url' => ['/administrator/profile/profile']],
-                        ['label' => '<i class="glyphicon glyphicon-cog"></i> '.Yii::t('user', 'Account'),  'url' => ['/administrator/profile/account']],
+                        ['label' => '<i class="glyphicon glyphicon-user"></i> '.Yii::t('user', 'Profile'),  'url' => ['/administrator/profile/index']],
+                        ['label' => '<i class="glyphicon glyphicon-user"></i> '.Yii::t('user', 'Edit Profile'),  'url' => ['/administrator/profile/profile']],
+                        ['label' => '<i class="glyphicon glyphicon-cog"></i> '.Yii::t('user', 'Edit Account'),  'url' => ['/administrator/profile/account']],
                         ['label' => '<i class="glyphicon glyphicon-globe"></i> '. Yii::t('user', 'Networks'), 'url' => ['/administrator/profile/networks']],
                     ]
                 ]) ?>
