@@ -16,8 +16,7 @@ class Bootstrap implements BootstrapInterface
     private $_modelMap = [
         'User'             => 'dimple\administrator\models\User',
         'Account'          => 'dimple\administrator\models\Account',
-        'Profile'          => 'dimple\administrator\models\Profile',
-        'Token'            => 'dimple\administrator\models\Token'
+        'Profile'          => 'dimple\administrator\models\Profile'
     ];
 
     /** @inheritdoc */

@@ -12,8 +12,13 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
+        "yiisoft/yii2-authclient": "~2.0.0",
         "kartik-v/yii2-widget-growl": "*",
-        "yzalis/ua-parser": "0.2.0.*@dev"
+        "yzalis/ua-parser": "0.2.0.*@dev",
+        "kartik-v/yii2-widget-growl": "*",
+        "bower-asset/remarkable-bootstrap-notify":"*",
+        "trntv/probe": "@dev",
+        "bower-asset/flot": "~0.8"
     },
     "autoload": {
         "psr-4": {
