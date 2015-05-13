@@ -57,9 +57,13 @@ class ProfileController extends Controller{
             return ActiveForm::validate($model);
         }
 
-        if($model->load(Yii::$app->request->post()) && $model->save()){
-            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Account details have been updated'));
-            $this->refresh();
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+             $model->password = $model->new_password;
+            if($model->save()){
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Account details have been updated'));
+                $this->refresh();
+            }         
+            print_r($model->getErrors());
         }else{
              return $this->render('account',['model'=>$model]);
         }

@@ -76,8 +76,11 @@ class AuthenController extends Controller
                 $user = $this->registerUser($client);
                 if ($user instanceof User) {
                     $account->link('user', $user);
+                    $this->action->successUrl = Url::to(['/administrator/profile/index']);
+                }else{
+                    $this->action->successUrl = Url::to(['/administrator/registration/connect','account_id'=>$account->id]);
                 }
-                $this->action->successUrl = Url::to(['/administrator/registration/connect','account_id'=>$account->id]);
+                
             }else{
 
                  Yii::$app->user->login($account->user, $this->module->rememberFor);
@@ -142,6 +145,7 @@ class AuthenController extends Controller
         $user->setPassword(Yii::$app->security->generateRandomKey());
 
         if($user->save()){
+           
             return $user;
         }else 
         {

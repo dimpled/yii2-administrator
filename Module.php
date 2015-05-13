@@ -5,6 +5,7 @@ namespace dimple\administrator;
 use Yii;
 use yii\i18n\PhpMessageSource;
 
+
 class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'dimple\administrator\controllers';
@@ -62,6 +63,8 @@ class Module extends \yii\base\Module
     public $confirmUrl;
     public $recoveryUrl;
 
+    public $layout = 'main';
+
     /**
      * @var string The prefix for user module URL.
      * @See [[GroupUrlRule::prefix]]
@@ -71,8 +74,18 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
+
+        Yii::configure($this, require(__DIR__ . '/config.php'));
         $this->registerTranslations();
         $this->setDefaultMessageMailer();
+
+        $this->modules = [
+            // 'admin' => [
+            //     // you should consider using a shorter namespace here!
+            //     'class' => 'app\modules\forum\modules\admin\Module',
+            // ],
+        ];
+
     }
 
     public function registerTranslations()

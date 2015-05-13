@@ -27,6 +27,13 @@ $this->params['User'] =  $model;
                     <li><i class="glyphicon glyphicon-map-marker text-muted"></i> <?= Html::encode($profile->location) ?></li>
                     <?php endif; ?>
                     <li><i class="glyphicon glyphicon-time text-muted"></i> <?= Yii::t('user', 'Joined on {0, date}', $profile->user->created_at) ?></li>
+
+                <?php if ($model->last_login_time !== null): ?>
+                <li><i class="glyphicon glyphicon-time text-muted"></i> Last Login 
+                <?= Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [$model->last_login_time]) ?>
+                </li>
+                 <?php endif ?>
+   
                 </ul>
                
             </div>

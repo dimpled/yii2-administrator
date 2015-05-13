@@ -8,7 +8,7 @@ use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
-
+                        
 $this->title = Yii::t('user','Information');
 $this->params['User'] = $user = $model;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];

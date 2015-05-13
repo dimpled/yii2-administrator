@@ -33,10 +33,11 @@ class User extends ActiveRecord implements IdentityInterface
     const TYPE_CONFIRMATION = 'confirm';
     const TYPE_RECOVERY     = 'recover';
 
-    public $password =  null;
-    public $enableConfirmation;
+    public $password;   
     public $new_password;
+    public $confirm_new_password;
     public $current_password;
+    public $enableConfirmation;
 
     public function scenarios()
     {
@@ -48,7 +49,7 @@ class User extends ActiveRecord implements IdentityInterface
             'update'    => ['username', 'email', 'password'],
             'request'   => ['email'],
             'recovery'  => ['password','password_reset_token'],
-            'account'   => ['username','email','new_password','current_password']
+            'account'   => ['username','email','password','new_password','confirm_new_password','current_password']
         ];
     }
 
@@ -76,9 +77,10 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             [['enableConfirmation'],'required','on'=>['create']],
             [['enableConfirmation'], 'default', 'value' => '1'],
-            [['new_password'],'string','min'=>6],
-            [['new_password', 'current_password'], 'required','on'=>['account']],
-            [['current_password'],'validateCurrentPassoward']
+            [['new_password','confirm_new_password'],'string','min'=>6],
+            [['new_password', 'current_password','confirm_new_password'], 'required','on'=>['account']],
+            ['confirm_new_password','compare','compareAttribute'=>'new_password'],
+            [['current_password'],'validateCurrentPassoward','on'=>['account']],
         ];
     }
 
@@ -416,6 +418,13 @@ class User extends ActiveRecord implements IdentityInterface
                 $this->last_login_ip = Yii::$app->request->getUserIP();
             }
             $this->login_ip = Yii::$app->request->getUserIP();
+    }
+
+    public function assing($rule='User'){
+        // the following three lines were added:
+        $auth = Yii::$app->authManager;
+        $authorRole = $auth->getRole($rule);
+        return $auth->assign($authorRole, $this->getId());
     }
 
 }

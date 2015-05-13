@@ -9,9 +9,7 @@ use yii\widgets\Pjax;
 $user = $this->params['User'];
 
 ?>
-
-<?php $this->beginContent('@app/views/layouts/main.php') ?>
-
+<?php $this->beginContent('@dimple/administrator/views/layouts/main.php') ?>
 <?= $this->render('_alert') ?>
 <?php Pjax::begin() ?>
 <h2><?= $this->title ?> </h2>

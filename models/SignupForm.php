@@ -3,7 +3,7 @@
 namespace dimple\administrator\models;
 
 use dimple\administrator\models\User;
-use dimple\administrator\models\Token;
+use dimple\administrator\Mailer;
 use yii\base\Model;
 use Yii;
 use yii\log\Logger;
@@ -17,9 +17,11 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $module;
+    public $mailer;
 
     public function init()
     {
+        $this->mailer = Yii::$container->get(Mailer::className());
         $this->module = Yii::$app->getModule('administrator');
         parent::init();
     }
@@ -70,8 +72,11 @@ class SignupForm extends Model
             if ($user->save()) {
 
                 if ($this->module->enableConfirmation) {
-                    $this->sendEmailConfirmation($user);
+                    $this->mailer->sendConfirmationMessage($user);
                 } else {
+
+                    $user->assing();
+                
                     Yii::$app->getUser()->login($user);
                 }
 
@@ -85,22 +90,5 @@ class SignupForm extends Model
         }
         Yii::getLogger()->log('An error occurred while registering user account', Logger::LEVEL_ERROR);
         return false;
-    }
-
-    public function sendEmailConfirmation($user)
-    {                  
-            $mailer = Yii::$app->mailer;
-            $mailer->viewPath = '@dimple/administrator/views/mail';
-            $mailer->getView()->theme = Yii::$app->view->theme;
-
-            return Yii::$app->mailer->compose([
-                    'html' => 'confirmation-html', 
-                    'text' => 'confirmation-text'], 
-                    ['user' => $user])
-                    ->setFrom([Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
-                    ->setTo($user->email)
-                    ->setSubject(Yii::t('user', 'Confirm account on {0}', \Yii::$app->name))
-                    ->send();
-
     }
 }

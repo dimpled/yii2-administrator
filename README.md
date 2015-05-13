@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/dimpled/yii2-administrator.svg?branch=master)](https://travis-ci.org/dimpled/yii2-administrator)
 Yii2-Administrator
 =========
 yii2-extension for administrator, authentication & authorization

@@ -46,8 +46,8 @@ class RbacController extends Controller
         $auth->addChild($admin, $userLog);
 
         $auth->assign($admin, 1);
-        $auth->assign($manager, 4);
-        $auth->assign($user, 5);
+        $auth->assign($manager, 2);
+        $auth->assign($user, 3);
 
         Console::output('Success! RBAC roles has been added.');
     }
