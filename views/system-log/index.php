@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'class' => 'backend\components\ActionColumn',
+                'class' => 'dimple\administrator\components\ActionColumn',
                 'template'=>'{view}{delete}',
                 'options'=>['style'=>'width:90px;'],
                 'contentOptions'=>['class'=>'text-center']
