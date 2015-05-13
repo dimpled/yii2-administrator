@@ -11,14 +11,17 @@ env: TEST_ENVIRONMENT=travis
 # faster builds on new travis setup not using sudo
 sudo: false
 
+before_install:
+  - php /home/travis/.phpenv/versions/5.6/bin/composer.phar self-update
+  - php /home/travis/.phpenv/versions/5.5/bin/composer.phar self-update
+  - php /home/travis/.phpenv/versions/5.6/bin/composer.phar self-update
 # cache vendor dirs
 cache:
   directories:
     - vendor
     - $HOME/.composer/cache
 
-before_install:
-  - php /home/travis/.phpenv/versions/5.6/bin/composer.phar self-update
+
 # install dependencies
 install:
   - travis_retry composer self-update
