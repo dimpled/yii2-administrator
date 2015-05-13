@@ -11,8 +11,4 @@ class BootstrapNotifyAssets extends AssetBundle
     public $js = [
         'bootstrap-notify.min.js'
     ];
-    
-    public $depends = [
-        'dimple\notify\AnimateAssets'
-    ];
 }
