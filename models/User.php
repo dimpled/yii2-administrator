@@ -420,4 +420,11 @@ class User extends ActiveRecord implements IdentityInterface
             $this->login_ip = Yii::$app->request->getUserIP();
     }
 
+    public function assing($rule='User'){
+        // the following three lines were added:
+        $auth = Yii::$app->authManager;
+        $authorRole = $auth->getRole($rule);
+        return $auth->assign($authorRole, $this->getId());
+    }
+
 }

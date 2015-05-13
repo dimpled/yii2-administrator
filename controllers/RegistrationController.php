@@ -42,6 +42,7 @@ class RegistrationController extends Controller
     }
 
     public function actionConfirm($token) {
+
         if ($this->module->enableConfirmation == false) {
             throw new NotFoundHttpException(Yii::t('user','User confirmation is currently not allowed!.'));
         }
@@ -62,6 +63,11 @@ class RegistrationController extends Controller
             $user->status = User::STATUS_ACTIVE;
 
             if ($user->save(false)) {
+
+                if ($this->module->enableConfirmation) {
+                    $user->assing();
+                }
+
                 Yii::$app->getUser()->login($user);
                 Yii::$app->session->setFlash('success', Yii::t('user', 'Thank you, registration is now complete.'));
             } else {
@@ -70,7 +76,7 @@ class RegistrationController extends Controller
         }
 
         return $this->render('/_alert', [
-            'title'  => \Yii::t('user', 'Account confirmation')
+            'title'  => Yii::t('user', 'Account confirmation')
         ]);
     }
     
@@ -92,7 +98,7 @@ class RegistrationController extends Controller
         $account = SocialAccount::findOne($account_id);
 
         if ($account === null || $account->getIsConnected()) {
-            throw new NotFoundHttpException;
+            throw new NotFoundHttpException('ไม่มี');
         }
 
         $user = new User(['scenario'=>'connect']);
@@ -101,6 +107,9 @@ class RegistrationController extends Controller
         
         if ($user->load(Yii::$app->request->post()) && $user->save()) {
             $account->link('user', $user);
+
+             $user->assing();
+
             Yii::$app->user->login($user, $this->module->rememberFor);
             return $this->goBack();
         }

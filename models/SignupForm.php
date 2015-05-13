@@ -71,14 +71,12 @@ class SignupForm extends Model
 
             if ($user->save()) {
 
-                // the following three lines were added:
-                $auth = Yii::$app->authManager;
-                $authorRole = $auth->getRole('User');
-                $auth->assign($authorRole, $user->getId());
-
                 if ($this->module->enableConfirmation) {
                     $this->mailer->sendConfirmationMessage($user);
                 } else {
+
+                    $user->assing();
+                
                     Yii::$app->getUser()->login($user);
                 }
 
