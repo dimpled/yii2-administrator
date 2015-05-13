@@ -25,10 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'enableAjaxValidation' => true,
             ]); ?>
                 <?= $form->field($model, 'username') ?>
-                <?= $form->field($model, 'password')->passwordInput() ?>
+                <?= $form->field($model, 'password')->passwordInput()->label(Yii::t('user', 'Password') . (Yii::$app->getModule('administrator')->enablePasswordRecovery ? ' ( ' . Html::a(Yii::t('user', 'Forgot password?'), ['/administrator/recovery/request'], ['tabindex' => '5']) . ' )' : '')) ;?>
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-success  btn-block', 'name' => 'login-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>

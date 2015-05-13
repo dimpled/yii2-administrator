@@ -48,7 +48,7 @@ class User extends ActiveRecord implements IdentityInterface
             'update'    => ['username', 'email', 'password'],
             'request'   => ['email'],
             'recovery'  => ['password','password_reset_token'],
-            'account'   => ['username','email','new_password','current_password']
+            'account'   => ['username','email','password','new_password','current_password']
         ];
     }
 
@@ -78,7 +78,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['enableConfirmation'], 'default', 'value' => '1'],
             [['new_password'],'string','min'=>6],
             [['new_password', 'current_password'], 'required','on'=>['account']],
-            [['current_password'],'validateCurrentPassoward']
+            [['current_password'],'validateCurrentPassoward','on'=>['account']],
         ];
     }
 

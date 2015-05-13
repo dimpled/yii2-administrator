@@ -49,26 +49,4 @@ class PasswordResetRequestForm extends Model
         return false;
     }
 
-    // public function sendEmails()
-    // {
-        
-
-    //     if ($user!=null) {
-            
-    //         $mailer = Yii::$app->mailer;
-    //         $mailer->viewPath = '@dimple/administrator/views/mail';
-    //         $mailer->getView()->theme = Yii::$app->view->theme;
-
-    //         return Yii::$app->mailer->compose([
-    //                 'html' => 'passwordReset-html', 
-    //                 'text' => 'passwordReset-text'], 
-    //                 ['user' => $user,'token'=>$token])
-    //                 ->setFrom([Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
-    //                 ->setTo($this->email)
-    //                 ->setSubject('Password reset for ' . \Yii::$app->name)
-    //                 ->send();
-    //     }
-
-    //     return false;
-    // }
 }
