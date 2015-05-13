@@ -36,7 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-
+<?php
+ if(isset(Yii::$app->authClientCollection)){
+             echo Connect::widget([
+            'baseAuthUrl' => ['/user/security/auth']
+             ]);
+}
+?>
 
 
 
