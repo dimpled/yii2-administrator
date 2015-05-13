@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
+use dimple\administrator\widgets\Connect;
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
@@ -34,8 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-<?= yii\authclient\widgets\AuthChoice::widget([
-     'baseAuthUrl' => ['/administrator/authen/auth']
-]) ?>
+
+
+
+
 
 
