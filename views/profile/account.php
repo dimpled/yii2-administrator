@@ -42,6 +42,7 @@ $this->params['User'] = $model;
 
                 <hr/>
                 <?= $form->field($model, 'new_password')->passwordInput() ?>
+                 <?= $form->field($model, 'confirm_new_password')->passwordInput() ?>
                
                 <div class="form-group">
                     <div class="col-lg-offset-3 col-lg-9">
