@@ -26,16 +26,16 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p> -->
   <table class="table">
-        <?php if ($user->last_login_time !== null): ?>
+        <?php if ($user->login_time !== null): ?>
         <tr>
             <td><strong><?= Yii::t('user', 'Last Login') ?>:</strong></td>
-            <td><?= Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [$user->last_login_time]) ?></td>
+            <td><?= Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [$user->login_time]) ?></td>
         </tr>
          <?php endif ?>
-         <?php if ($user->last_login_ip !== null): ?>
+         <?php if ($user->login_ip !== null): ?>
         <tr>
             <td><strong><?= Yii::t('user', 'Last Login ip') ?>:</strong></td>
-            <td><?= $user->last_login_ip; ?></td>
+            <td><?= $user->login_ip; ?></td>
         </tr>
         <?php endif ?>
         <tr>
