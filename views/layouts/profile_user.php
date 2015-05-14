@@ -5,13 +5,13 @@ use yii\bootstrap\Nav;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-
+$networksVisible = count(Yii::$app->authClientCollection->clients) > 0;
 $user = $this->params['User'];
 ?>
 
 <?php $this->beginContent('@dimple/administrator/views/layouts/main.php') ?>
 <?= $this->render('_alert') ?>
-<?php Pjax::begin() ?>
+
 <h2>Profile </h2>
 <div class="row">
     <div class="col-md-3">
@@ -29,7 +29,7 @@ $user = $this->params['User'];
                         ['label' => '<i class="glyphicon glyphicon-user"></i> '.Yii::t('user', 'Profile'),  'url' => ['/administrator/profile/index']],
                         ['label' => '<i class="glyphicon glyphicon-user"></i> '.Yii::t('user', 'Edit Profile'),  'url' => ['/administrator/profile/profile']],
                         ['label' => '<i class="glyphicon glyphicon-cog"></i> '.Yii::t('user', 'Edit Account'),  'url' => ['/administrator/profile/account']],
-                        ['label' => '<i class="glyphicon glyphicon-globe"></i> '. Yii::t('user', 'Networks'), 'url' => ['/administrator/profile/networks']],
+                        ['label' => '<i class="glyphicon glyphicon-globe"></i> '. Yii::t('user', 'Networks'), 'url' => ['/administrator/profile/networks'],'visible'=>$networksVisible],
                     ]
                 ]) ?>
               
@@ -44,6 +44,6 @@ $user = $this->params['User'];
         </div>
     </div>
 </div>
-<?php Pjax::end() ?>
+
 <?= $this->render('/user-manage/_pjaxMsg') ?>
 <?php $this->endContent() ?>

@@ -7,6 +7,7 @@ use dimple\administrator\Mailer;
 use dimple\administrator\models\User;
 use dimple\administrator\models\UserSearch;
 use dimple\administrator\models\SystemLoginformSearch;
+use dimple\administrator\grid\ToggleAction;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -34,7 +35,7 @@ class UserManageController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index','resend-confirm', 'delete','create','update','update-profile','view','user-loginlog'],
+                        'actions' => ['toggle-confirm','toggle-block','index','resend-confirm', 'delete','create','update','update-profile','view','user-loginlog'],
                         'allow' => true,
                         'roles' => ['Manager'],
                     ],
@@ -47,6 +48,27 @@ class UserManageController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actions(){
+      return [
+        'toggle-confirm' => [
+            'class' =>ToggleAction::className(),
+            'modelClass' => 'dimple\administrator\models\User',
+            'attribute' => 'confirmed_at',
+            'setAttributes'=>function($model, $value, $attribute){
+              return $model->isConfirmed?null:time();
+            }
+        ],
+        'toggle-block' => [
+            'class' =>ToggleAction::className(),
+            'modelClass' => 'dimple\administrator\models\User',
+            'attribute' => 'blocked_at',
+            'setAttributes'=>function($model, $value, $attribute){
+              return $model->isBlocked?null:time();
+            }
+        ]
+    ];
     }
 
     public function actionResendConfirm($id){
@@ -74,7 +96,6 @@ class UserManageController extends Controller
     {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $this->updateField();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -233,7 +254,7 @@ class UserManageController extends Controller
 
          if(in_array(Yii::$app->controller->action->id, ['view','create','update','user-loginlog','update-profile'])){
             $this->layout = '@dimple/administrator/views/layouts/profile';
-            $this->updateField();
+            //$this->updateField();
          }
 
          return true; 

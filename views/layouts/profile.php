@@ -11,7 +11,7 @@ $user = $this->params['User'];
 ?>
 <?php $this->beginContent('@dimple/administrator/views/layouts/main.php') ?>
 <?= $this->render('_alert') ?>
-<?php Pjax::begin() ?>
+
 <h2><?= $this->title ?> </h2>
 <div class="row">
     <div class="col-md-3">
@@ -45,6 +45,6 @@ $user = $this->params['User'];
         </div>
     </div>
 </div>
-<?php Pjax::end() ?>
+
 <?= $this->render('/user-manage/_pjaxMsg') ?>
 <?php $this->endContent() ?>

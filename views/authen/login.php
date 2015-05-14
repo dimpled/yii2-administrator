@@ -2,7 +2,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
-use dimple\administrator\widgets\Connect;
+//use dimple\administrator\widgets\Connect;
+use dektrium\user\widgets\Connect;
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
@@ -35,14 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-
-<?php
- if(isset(Yii::$app->authClientCollection)){
-             echo Connect::widget([
-            'baseAuthUrl' => ['/user/security/auth']
-             ]);
-}
-?>
+ <?= Connect::widget([
+            'baseAuthUrl' => ['/administrator/authen/auth']
+]) ?>
 
 
 

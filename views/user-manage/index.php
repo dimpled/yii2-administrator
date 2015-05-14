@@ -7,7 +7,8 @@ use yii\jui\DatePicker;
 use yii\widgets\Pjax;
 use kartik\growl\Growl;
 use yii\bootstrap\Alert;
-use dimple\notify\BootstrapNotify;
+use dimple\administrator\grid\ToggleColumn;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\UserSearch */
@@ -30,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
-    'layout'  => "{items}\n{pager}",
     'columns' => [
         [
             'attribute'=>'username',
@@ -64,25 +64,43 @@ $this->params['breadcrumbs'][] = $this->title;
             ]),
         ],
         [
-        'header' => Yii::t('user', 'Confirmation'),
-        'attribute'=>'confirmed_at','format'=>'raw','value'=>function($model, $key, $index, $column){
-                return Html::a($model->isConfirmed?'<i class="glyphicon glyphicon-check"></i>   Confirmed':' Confirm',
-                       ['/administrator/user-manage/index','id'=>$model->id,'field'=>'confirmed_at','status'=>$model->isConfirmed?1:0],
-                       ['class'=>'confirm-pjax btn btn-sm btn-update-field btn-block '.($model->isConfirmed?'btn-success':'btn-default')
-                ]);
-            },
-            'options'=>['style'=>'width:50px;'],
-            'visible' => Yii::$app->getModule('administrator')->enableConfirmation
+            'class'=>ToggleColumn::className(),
+            'action'=>'toggle-confirm',
+            'attribute' => 'confirmed_at',
+            'value'=>function($model, $key, $index, $column){
+               $label   = $model->isConfirmed?' <i class="glyphicon glyphicon-check"></i>   Confirmed':' Confirm';
+               $btn     = $model->isConfirmed?'btn-success':'btn-default';
+               $linkOptions = ArrayHelper::merge($column->linkOptions,['class'=>'toggle-column btn btn-sm btn-block '. $btn]);
+               return Html::a($label, $column->url, $linkOptions);
+            }
+        ],[
+            'class'=>ToggleColumn::className(),
+            'action'=>'toggle-block',
+            'attribute' => 'blocked_at',
+            'value'=>function($model, $key, $index, $column){
+                return $model->isBlocked;
+            }
         ],
-        [
-        'header' => Yii::t('user', 'Block status'),
-        'attribute'=>'blocked_at','format'=>'raw','value'=>function($model, $key, $index, $column){
-                return Html::a($model->isBlocked?'<i class="glyphicon glyphicon-ban-circle"></i>  Unblock':' Block',['/administrator/user-manage/index','id'=>$model->id,'field'=>'blocked_at','status'=>$model->isBlocked?1:0],[
-                        'class'=>'btn btn-sm btn-update-field btn-block '.($model->isBlocked?'btn-danger':'btn-default')
-                ]);
-            },
-            'options'=>['style'=>'width:50px;']
-        ],
+        // [
+        // 'header' => Yii::t('user', 'Confirmation'),
+        // 'attribute'=>'confirmed_at','format'=>'raw','value'=>function($model, $key, $index, $column){
+        //         return Html::a($model->isConfirmed?'<i class="glyphicon glyphicon-check"></i>   Confirmed':' Confirm',
+        //                Url::current(),
+        //                ['class'=>'btn btn-sm toggle-column btn-block '.($model->isConfirmed?'btn-success':'btn-default')
+        //         ]);
+        //     },
+        //     'options'=>['style'=>'width:50px;'],
+        //     'visible' => Yii::$app->getModule('administrator')->enableConfirmation
+        // ],
+        // [
+        // 'header' => Yii::t('user', 'Block status'),
+        // 'attribute'=>'blocked_at','format'=>'raw','value'=>function($model, $key, $index, $column){
+        //         return Html::a($model->isBlocked?'<i class="glyphicon glyphicon-ban-circle"></i>  Unblock':' Block',['/administrator/user-manage/index','id'=>$model->id,'field'=>'blocked_at','status'=>$model->isBlocked?1:0],[
+        //                 'class'=>'btn btn-sm btn-update-field btn-block '.($model->isBlocked?'btn-danger':'btn-default')
+        //         ]);
+        //     },
+        //     'options'=>['style'=>'width:50px;']
+        // ],
         [
                 'class' => 'dimple\administrator\components\ActionColumn',
                 //'template'=>'{view}{delete}',
@@ -95,4 +113,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php Pjax::end() ?>
 </div>
-<?= $this->render('_pjaxMsg') ?>
+
+<?php //$this->render('_pjaxMsg') ?>
