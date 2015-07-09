@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         [
             'class'=>ToggleColumn::className(),
-            'action'=>'toggle-confirm',
+            'action' => 'toggle-confirm',
             'attribute' => 'confirmed_at',
             'value'=>function($model, $key, $index, $column){
                $label   = $model->isConfirmed?' <i class="glyphicon glyphicon-check"></i>   Confirmed':' Confirm';
@@ -75,12 +75,15 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         ],[
             'class'=>ToggleColumn::className(),
+            //'optionOn'=>['icon'=>'check', 'label'=>'OK', 'btnColor'=>'btn-success'],
             'action'=>'toggle-block',
             'attribute' => 'blocked_at',
             'value'=>function($model, $key, $index, $column){
                 return $model->isBlocked;
             }
         ],
+
+
         // [
         // 'header' => Yii::t('user', 'Confirmation'),
         // 'attribute'=>'confirmed_at','format'=>'raw','value'=>function($model, $key, $index, $column){
@@ -110,7 +113,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ]
     ],
 ]); ?>
-
 <?php Pjax::end() ?>
 </div>
 

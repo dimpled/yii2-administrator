@@ -66,6 +66,10 @@ class ToggleColumn extends DataColumn
             extract ($this->optionOff);
         }
 
+        if(!isset($btnColor)) $btnColor='';
+        if(!isset($icon)) $icon=false;
+        if(!isset($label)) $label='';
+
         return Html::a(
             ($icon===false?'':'<span class="glyphicon glyphicon-' . $icon . '"></span> ').$label,
             $this->url,
